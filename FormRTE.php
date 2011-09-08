@@ -41,6 +41,11 @@ class FormRTE extends Controller
 	 */
 	public function loadFormField($objWidget, $intForm)
 	{
+		if(TL_MODE == 'BE')
+		{
+			return $objWidget;
+		}
+
 		// Register field name for rich text editor usage
 		if ($objWidget instanceof FormTextArea && strlen($objWidget->rte) && $GLOBALS['TL_CONFIG']['useRTE'])
 		{

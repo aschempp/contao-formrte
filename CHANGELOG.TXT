@@ -1,0 +1,7 @@
+==========================
+Contao Extension "formrte"
+==========================
+
+Version x.x.x (2011-??-??)
+--------------------------
+- Fixed widget issue in the backend
