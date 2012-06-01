@@ -82,6 +82,8 @@ class FormRTE extends Controller
 			ob_end_clean();
 			$GLOBALS['TL_JAVASCRIPT']['rte'] = 'contao/contao.js';
 			
+			// register all fields for tinyMCE.
+			// required because tinyMCE mode equals 'none'
 			$GLOBALS['TL_MOOTOOLS']['rte'] = '<script>';
 			foreach($GLOBALS['TL_RTE']['fields'] as $fieldName) 
 			{
