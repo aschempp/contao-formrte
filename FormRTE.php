@@ -47,8 +47,9 @@ class FormRTE extends Controller
 		}
 
 		// Register field name for rich text editor usage
-		if ($objWidget instanceof FormTextArea && strlen($objWidget->rte) && $GLOBALS['TL_CONFIG']['useRTE'])
+		if ($objWidget instanceof FormTextArea && strlen($objWidget->rte))
 		{
+			$GLOBALS['TL_CONFIG']['useRTE'] = true;
 			$GLOBALS['TL_RTE']['type'] = $objWidget->rte;
 			$GLOBALS['TL_RTE']['fields'][] = 'ctrl_' . $objWidget->id;
 		}
@@ -79,7 +80,15 @@ class FormRTE extends Controller
 			include($strFile);
 			$GLOBALS['TL_HEAD']['rte'] = ob_get_contents();
 			ob_end_clean();
-			$GLOBALS['TL_JAVASCRIPT']['rte'] = version_compare(VERSION, '2.9', '<') ? 'typolight/typolight.js' : 'contao/contao.js';
+			$GLOBALS['TL_JAVASCRIPT']['rte'] = 'contao/contao.js';
+			
+			$GLOBALS['TL_MOOTOOLS']['rte'] = '<script>';
+			foreach($GLOBALS['TL_RTE']['fields'] as $fieldName) 
+			{
+				$GLOBALS['TL_MOOTOOLS']['rte'] .=	"tinyMCE.execCommand('mceAddControl', false, '$fieldName');\$('$fieldName').erase('required');";
+			}
+			$GLOBALS['TL_MOOTOOLS']['rte'] .= '</script>';
+
 		}
 		
 		return $objWidget;
